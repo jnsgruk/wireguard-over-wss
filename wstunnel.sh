@@ -61,17 +61,17 @@ maybe_update_host () {
     read -r recorded_ip h_mode < <(read_host_entry "${host}" "${hfile}") || true
 
     if [[ -z "${recorded_ip}" ]]; then
-        echo "# Add new entry ${host} => <${current_ip}>"
+        echo "[#] Add new entry ${host} => <${current_ip}>"
         add_host_entry "${host}" "${current_ip}" "${hfile}"
     else
         if [[ "${recorded_ip}" == "${current_ip}" ]]; then
-            echo "# Recorded address is already correct"
+            echo "[#] Recorded address is already correct"
         else
             if [[ "${h_mode}" == "auto" ]]; then
-                echo "# Updating ${recorded_ip} -> ${current_ip}"
+                echo "[#] Updating ${recorded_ip} -> ${current_ip}"
                 update_host_entry "${host}" "${current_ip}" "${hfile}"
             else
-                echo "# Manual entry doesn't match current ip: ${recorded_ip} -> ${current_ip}"
+                echo "[#] Manual entry doesn't match current ip: ${recorded_ip} -> ${current_ip}"
                 exit 2
             fi
         fi
@@ -111,14 +111,14 @@ pre_up () {
         hosts_file=${UPDATE_HOSTS}
         _dnsmasq=${USING_DNSMASQ:-0}
     else
-        echo "# Missing config file: ${cfg}"
+        echo "[#] Missing config file: ${cfg}"
         exit 1
     fi
 
     remote_ip=$(dig +short "${remote}")
 
     if [[ -z "${remote_ip}" ]]; then
-        echo "# Can't resolve ${remote}"
+        echo "[#] Can't resolve ${remote}"
         exit 1
     fi
 
@@ -161,7 +161,7 @@ post_down () {
 
         rm "${state_file}"
     else
-        echo "# Missing state file: ${state_file}"
+        echo "[#] Missing state file: ${state_file}"
         exit 1
     fi
 
