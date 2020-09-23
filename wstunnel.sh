@@ -81,7 +81,7 @@ maybe_update_host () {
 launch_wstunnel () {
     local host=${REMOTE_HOST}
     local rport=${REMOTE_PORT:-51820}
-    local wssport=${WSSPORT_PORT:-443}
+    local wssport=${WSS_PORT:-443}
     local lport=${LOCAL_PORT:-${rport}}
     local prefix=${WS_PREFIX:-"wstunnel"}
     local user=${1:-"nobody"}
