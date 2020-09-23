@@ -81,6 +81,7 @@ maybe_update_host () {
 launch_wstunnel () {
     local host=${REMOTE_HOST}
     local rport=${REMOTE_PORT:-51820}
+    local wssport=${WSSPORT_PORT:-443}
     local lport=${LOCAL_PORT:-${rport}}
     local prefix=${WS_PREFIX:-"wstunnel"}
     local user=${1:-"nobody"}
@@ -95,7 +96,7 @@ launch_wstunnel () {
       --udpTimeoutSec "${timeout}" \
       --upgradePathPrefix "${prefix}" \
       --udp  -L "127.0.0.1:${lport}:127.0.0.1:${rport}" \
-      "wss://${host}" & disown
+      "wss://${host}:${wssport}" & disown
     echo "$!"
 }
 

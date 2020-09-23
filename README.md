@@ -58,17 +58,22 @@ apt update && apt install -y curl jq
 6. Create a connection specific config file at `/etc/wireguard/wss.wstunnel` [(example)](./wss.wstunnel):
 
 ```
-REMOTE_HOST=wg.jnsgr.uk
+REMOTE_HOST=some.server.com
 REMOTE_PORT=51820
 UPDATE_HOSTS='/etc/hosts'
-# if using nginx with custom prefix for added security, configure it here
+
+# Change if using nginx with custom prefix for added security
 # WS_PREFIX='E7m5vGDqryd55MMP'
 
+# Change if running WSS on a non-standard port, i.e. 4443
+# WSS_PORT=443
+
 # Can change local port of the wstunnel, don't forget to change Peer.Endpoint
-#LOCAL_PORT=${REMOTE_PORT}
+# LOCAL_PORT=${REMOTE_PORT}
 
 # If using dnsmasq can supply other file than /etc/hosts
 # UPDATE_HOSTS='/usr/local/etc/dnsmasq.d/hosts/tunnels'
+
 # Will send -HUP to dnsmasq to reload hosts
 # USING_DNSMASQ=1
 ```
