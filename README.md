@@ -85,8 +85,8 @@ Next we will modify the client confg to configure routing and point at the corre
 
 ```
 Table = off
-PreUp = /etc/wireguard/do-firewall.sh allow; source /etc/wireguard/wstunnel.sh && pre_up %i
-PostUp = source /etc/wireguard/wstunnel.sh && post_up %i && /etc/wireguard/do-firewall.sh deny wait &
+PreUp = source /etc/wireguard/wss.wstunnel && /etc/wireguard/do-firewall.sh allow && source /etc/wireguard/wstunnel.sh && pre_up %i
+PostUp = source /etc/wireguard/wss.wstunnel && source /etc/wireguard/wstunnel.sh && post_up %i && /etc/wireguard/do-firewall.sh deny wait &
 PostDown = source /etc/wireguard/wstunnel.sh && post_down %i
 ```
 

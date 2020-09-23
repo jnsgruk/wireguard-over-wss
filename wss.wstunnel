@@ -6,7 +6,7 @@ UPDATE_HOSTS='/etc/hosts'
 # WS_PREFIX='E7m5vGDqryd55MMP'
 
 # Change if running WSS on a non-standard port, i.e. 4443
-# WSS_PORT=443
+# export WSS_PORT=443
 
 # Can change local port of the wstunnel, don't forget to change Peer.Endpoint
 # LOCAL_PORT=${REMOTE_PORT}
