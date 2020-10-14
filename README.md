@@ -53,7 +53,7 @@ apt update && apt install -y curl jq
 1. Download the latest wstunnel [release](https://github.com/erebe/wstunnel/releases)
 2. Copy the binary to `/usr/local/bin/wstunnel`
 3. Copy existing config to `/etc/wireguard/wss.conf`
-4. Install `do-firewall.sh` to `/etc/wireguard/do-firewall.sh` and modify to include a valid DigitalOcean API key. [(script)](./do-firewall.sh)
+4. If using the DigitalOcean firewall script, install `do-firewall.sh` to `/etc/wireguard/do-firewall.sh` and modify to include a valid DigitalOcean API key. [(script)](./do-firewall.sh)
 5. Install `wstunnel.sh` to `/etc/wireguard/wstunnel.sh` [(script)](./wstunnel.sh)
 6. Create a connection specific config file at `/etc/wireguard/wss.wstunnel` [(example)](./wss.wstunnel):
 
@@ -85,10 +85,12 @@ Next we will modify the client confg to configure routing and point at the corre
 
 ```
 Table = off
-PreUp = source /etc/wireguard/wss.wstunnel && /etc/wireguard/do-firewall.sh allow && source /etc/wireguard/wstunnel.sh && pre_up %i
-PostUp = source /etc/wireguard/wss.wstunnel && source /etc/wireguard/wstunnel.sh && post_up %i && /etc/wireguard/do-firewall.sh deny wait &
+PreUp = source /etc/wireguard/wstunnel.sh && pre_up %i
+PostUp = source /etc/wireguard/wstunnel.sh && post_up %i
 PostDown = source /etc/wireguard/wstunnel.sh && post_down %i
 ```
+
+**Note:**: Additional config required to include the DigitalOcean firewall script. [Example](./wss-with-firewall.conf)
 
 #### Finish
 
