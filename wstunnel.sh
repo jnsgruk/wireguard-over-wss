@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #
 # Original script downloaded from: https://github.com/Kirill888/notes/blob/wg-tunnel-update/wireguard/scripts/wstunnel.sh

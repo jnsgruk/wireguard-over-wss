@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 ACCESS_TOKEN="REPLACE_ME"
 FIREWALL_ID=$(curl -s -X GET -H "Content-Type: application/json" -H "Authorization: Bearer ${ACCESS_TOKEN}" "https://api.digitalocean.com/v2/firewalls" | jq -r '.firewalls[0].id')
 FIREWALL_URL="https://api.digitalocean.com/v2/firewalls/${FIREWALL_ID}"
