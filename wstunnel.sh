@@ -116,7 +116,7 @@ pre_up () {
         exit 1
     fi
 
-    remote_ip=$(dig +short "${remote}")
+    remote_ip=$(dig +short "${remote}" | head -n 1)
 
     if [[ -z "${remote_ip}" ]]; then
         echo "[#] Can't resolve ${remote}"
