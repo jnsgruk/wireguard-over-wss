@@ -2,6 +2,10 @@ REMOTE_HOST=some.server.com
 REMOTE_PORT=51820
 UPDATE_HOSTS='/etc/hosts'
 
+# Change if using CDN with custom IP or need use custom ip for domain (It's optional)
+# if not set => auto get one of REMOTE_HOST ip
+# REMOTE_IP=1.1.1.1
+
 # Change if using nginx with custom prefix for added security
 # WS_PREFIX='E7m5vGDqryd55MMP'
 

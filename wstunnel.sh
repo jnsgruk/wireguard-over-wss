@@ -109,14 +109,13 @@ pre_up () {
         # shellcheck disable=SC1090
         source "${cfg}"
         remote=${REMOTE_HOST}
+        remote_ip=${REMOTE_IP:-$(dig +short "${remote}" | head -n 1)}
         hosts_file=${UPDATE_HOSTS}
         _dnsmasq=${USING_DNSMASQ:-0}
     else
         echo "[#] Missing config file: ${cfg}"
         exit 1
     fi
-
-    remote_ip=$(dig +short "${remote}")
 
     if [[ -z "${remote_ip}" ]]; then
         echo "[#] Can't resolve ${remote}"
