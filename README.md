@@ -13,6 +13,10 @@ No modifications need to be made to the Wireguard server configuration itself, b
 3. Allow the binary to listen on privileged ports:
 
 ```bash
+$ version="$(curl -sL https://api.github.com/repos/erebe/wstunnel/releases | grep -m1 -Po 'tag_name": "\K[^"]+')"
+$ curl -sL "https://github.com/erebe/wstunnel/releases/download/${version}/wstunnel_${version/v/}_linux_amd64.tar.gz" > wstunnel.tar.gz
+$ tar xvzf wstunnel.tar.gz
+$ sudo install -Dm 0755 wstunnel /usr/local/bin/wstunnel
 $ sudo setcap CAP_NET_BIND_SERVICE=+eip /usr/local/bin/wstunnel
 ```
 
