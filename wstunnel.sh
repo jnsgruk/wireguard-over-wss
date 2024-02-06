@@ -92,10 +92,9 @@ launch_wstunnel () {
     cmd="sudo -n -u ${user} -- $cmd"
 
     $cmd >/dev/null 2>&1 </dev/null \
-      --quiet \
-      --udpTimeoutSec "${timeout}" \
-      --upgradePathPrefix "${prefix}" \
-      --udp  -L "127.0.0.1:${lport}:127.0.0.1:${rport}" \
+      client \
+      --http-upgrade-path-prefix "${prefix}" \
+      -L "udp://127.0.0.1:${lport}:127.0.0.1:${rport}?timeout_sec=${timeout}" \
       "wss://${host}:${wssport}" & disown
     echo "$!"
 }
