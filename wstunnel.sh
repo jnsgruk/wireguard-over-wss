@@ -4,7 +4,6 @@
 # Original script downloaded from: https://github.com/Kirill888/notes/blob/wg-tunnel-update/wireguard/scripts/wstunnel.sh
 # Modified by jnsgruk to use `ip route` for modern Linux distros
 #
-
 DEFAULT_HOSTS_FILE='/etc/hosts'
 
 read_host_entry () {
@@ -85,17 +84,17 @@ launch_wstunnel () {
     local lport=${LOCAL_PORT:-${rport}}
     local prefix=${WS_PREFIX:-"wstunnel"}
     local user=${1:-"nobody"}
-    local timeout=${TIMEOUT:-"-1"}
     local cmd
 
     cmd=$(command -v wstunnel)
     cmd="sudo -n -u ${user} -- $cmd"
 
-    $cmd >/dev/null 2>&1 </dev/null \
+    nohup $cmd &>/dev/null \
       client \
+      --no-color NO_COLOR \
       --http-upgrade-path-prefix "${prefix}" \
-      -L "udp://127.0.0.1:${lport}:127.0.0.1:${rport}?timeout_sec=${timeout}" \
-      "wss://${host}:${wssport}" & disown
+      -L "udp://127.0.0.1:${lport}:127.0.0.1:${rport}" \
+      "wss://${host}:${wssport}" &
     echo "$!"
 }
 
