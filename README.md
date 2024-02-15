@@ -1,10 +1,10 @@
-### Wireguard-over-Websockets Config
+# Wireguard-over-Websockets Config
 
-This project explains the steps to enable a Wireguard VPN connection to be tunnelled over a Secure Websockets (WSS) connection for use cases where outbound VPN traffic may be blocked/filtered/monitored.
+This project explains the steps to enable a Wireguard VPN connection to be tunnelled over a secure websockets connection for use cases where outbound VPN traffic may be blocked/filtered/monitored.
 
-The following steps assume that there is already a Wireguard connection established that is to be mondified for tunelling over WSS.
+The following steps assume that there is already a Wireguard connection established that is to be modified for tunnelling over WSS.
 
-#### Server Configuration
+## Server Configuration
 
 No modifications need to be made to the Wireguard server configuration itself, but `wstunnel` needs to be installed and configured as a systemd unit.
 
@@ -46,7 +46,7 @@ $ sudo systemctl start wstunnel
 
 If relying solely on the software firewall installed on the droplet, ensure that inbound traffic to port 443 is permitted.
 
-#### Client Configuration
+## Client Configuration
 
 Ensure dependencies are installed (debian-based example):
 
@@ -93,7 +93,7 @@ PostUp = source /etc/wireguard/wstunnel.sh && post_up %i
 PostDown = source /etc/wireguard/wstunnel.sh && post_down %i
 ```
 
-#### Finish
+## Finish
 
 The tunnelling should now be configured - ensure the server is running and `wstunnel` is started on the server and initiate a connection - you should then be able to see the tunnel established by running `wg`.
 
