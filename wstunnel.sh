@@ -89,9 +89,9 @@ launch_wstunnel () {
     cmd=$(command -v wstunnel)
     cmd="sudo -n -u ${user} -- $cmd"
 
+    export NO_COLOR=true
     nohup $cmd &>/dev/null \
       client \
-      --no-color NO_COLOR \
       --http-upgrade-path-prefix "${prefix}" \
       -L "udp://127.0.0.1:${lport}:127.0.0.1:${rport}" \
       "wss://${host}:${wssport}" &
