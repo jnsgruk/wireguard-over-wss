@@ -13,11 +13,11 @@ No modifications need to be made to the Wireguard server configuration itself, b
 3. Allow the binary to listen on privileged ports:
 
 ```bash
-$ version="$(curl -sL https://api.github.com/repos/erebe/wstunnel/releases | grep -m1 -Po 'tag_name": "\K[^"]+')"
-$ curl -sL "https://github.com/erebe/wstunnel/releases/download/${version}/wstunnel_${version/v/}_linux_amd64.tar.gz" > wstunnel.tar.gz
-$ tar xvzf wstunnel.tar.gz
-$ sudo install -Dm 0755 wstunnel /usr/local/bin/wstunnel
-$ sudo setcap CAP_NET_BIND_SERVICE=+eip /usr/local/bin/wstunnel
+version="$(curl -sL https://api.github.com/repos/erebe/wstunnel/releases | grep -m1 -Po 'tag_name": "\K[^"]+')"
+curl -sL "https://github.com/erebe/wstunnel/releases/download/${version}/wstunnel_${version/v/}_linux_amd64.tar.gz" > wstunnel.tar.gz
+tar xvzf wstunnel.tar.gz
+sudo install -Dm 0755 wstunnel /usr/local/bin/wstunnel
+sudo setcap CAP_NET_BIND_SERVICE=+eip /usr/local/bin/wstunnel
 ```
 
 4. Create the following service file at `/etc/systemd/system/wstunnel.service`:
@@ -44,7 +44,7 @@ $ sudo systemctl enable wstunnel
 $ sudo systemctl start wstunnel
 ```
 
-If relying solely on the software firewall installed on the droplet, ensure that inbound traffic to port 443 is permitted. If relying upon DigitalOcean cloud firewall, see later steps for dynamically allowing traffic through during connection establishment using the DigitalOcean API.
+If relying solely on the software firewall installed on the droplet, ensure that inbound traffic to port 443 is permitted.
 
 #### Client Configuration
 
@@ -57,9 +57,8 @@ apt update && apt install -y curl jq
 1. Download the latest wstunnel [release](https://github.com/erebe/wstunnel/releases)
 2. Copy the binary to `/usr/local/bin/wstunnel`
 3. Copy existing config to `/etc/wireguard/wss.conf`
-4. If using the DigitalOcean firewall script, install `do-firewall.sh` to `/etc/wireguard/do-firewall.sh` and modify to include a valid DigitalOcean API key. [(script)](./do-firewall.sh)
-5. Install `wstunnel.sh` to `/etc/wireguard/wstunnel.sh` [(script)](./wstunnel.sh)
-6. Create a connection specific config file at `/etc/wireguard/wss.wstunnel` [(example)](./wss.wstunnel):
+4. Install `wstunnel.sh` to `/etc/wireguard/wstunnel.sh` [(script)](./wstunnel.sh)
+5. Create a connection specific config file at `/etc/wireguard/wss.wstunnel` [(example)](./wss.wstunnel):
 
 ```
 REMOTE_HOST=some.server.com
@@ -94,8 +93,6 @@ PostUp = source /etc/wireguard/wstunnel.sh && post_up %i
 PostDown = source /etc/wireguard/wstunnel.sh && post_down %i
 ```
 
-**Note:**: Additional config required to include the DigitalOcean firewall script. [Example](./wss-with-firewall.conf)
-
 #### Finish
 
 The tunnelling should now be configured - ensure the server is running and `wstunnel` is started on the server and initiate a connection - you should then be able to see the tunnel established by running `wg`.
@@ -107,13 +104,3 @@ $ chown -R root: /etc/wireguard
 $ chmod 600 /etc/wireguard/*
 $ chmod 700 /etc/wireguard/do-firewall.sh
 ```
-
-#### Notes on DigitalOcean Firewall Script
-
-The script is relatively naive, and assumes that only 1 firewall is associcated with the DigitalOcean account.
-
-The `do-firewall.sh` script provides 3 commands:
-
-1. `./do-firewall.sh info` - display firewall information
-2. `./do-firewall.sh allow` - allow inbound 443/tcp traffic
-3. `./do-firewall.sh deny` - deny inbound 443/tcp traffic (optionally specify wait to disable after 60s - e.g. `./do-firewall.sh deny wait`)
