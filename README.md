@@ -102,5 +102,4 @@ Ensure that all files under `/etc/wireguard` are owned by root:
 ```
 $ chown -R root: /etc/wireguard
 $ chmod 600 /etc/wireguard/*
-$ chmod 700 /etc/wireguard/do-firewall.sh
 ```
