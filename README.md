@@ -81,7 +81,7 @@ UPDATE_HOSTS='/etc/hosts'
 # USING_DNSMASQ=1
 ```
 
-Next we will modify the client confg to configure routing and point at the correct endpoint for our websockets tunnel. (Or cheat, and look at the [example config](./wss.conf))
+Next we will modify the client config to configure routing and point at the correct endpoint for our websockets tunnel. (Or cheat, and look at the [example config](./wss.conf))
 
 1. Ensure the `Endpoint` directive is pointing at `127.0.0.1:51820`
 2. Add the following lines to the `[Interface]` section:
